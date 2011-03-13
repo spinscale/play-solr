@@ -13,8 +13,34 @@ bc. solr.server=http://localhost:8983/solr
 h2. Solr configuration
 
 * Add the binary request handler to your configuration
-* Add the searchClass field as string to your configuration
-* Id is the 
+* Add the searchClass field as string to your configuration (every entity search will use this as a filter!)
+* Id is the unique key
+
+h2. Model configuration
+
+bc. @Entity
+public class User extends SearchModel {
+        @Field
+        public String name;
+        @Field("tw_s")
+        public String twitter;
+}
+
+As you can see, you either use name of the field as index name or provide it inside of the annotation. This makes it easy for arbitrary attributes without having to add them manually to the solr configuration.
+
+h2. Searches
+
+Searches can be fired in your code with a breeze
+
+bc. List<User> users = User.search("byNameAndTwitter", "a*ex", "spinscale*").fetch();
+
+Note that this type of query actually does database queries! If you just need the ids, use
+
+bc. List<String> ids = User.search("byNameAndTwitter", "a*ex", "spinscale*").fetchIds();
+
+You can use start() and limit() to have pagination and decrease database loads
+
+bc. List<User> users = User.search("byNameAndTwitter", "a*ex", "spinscale*").start(10).limit(10).fetch();
 
 h2. Weaknesses and problems
 
