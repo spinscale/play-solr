@@ -1,0 +1,23 @@
+h1. Solr plugin for playframework
+
+This plugin is an example plugin I wrote the upcoming playframework cookbook. It is actually pretty raw and lacks severe documentation.
+
+You might want to try it anyway.
+
+h2. Play configuration
+
+You can configure another server than localhost by setting the solr.server property 
+
+bc. solr.server=http://localhost:8983/solr
+
+h2. Solr configuration
+
+* Add the binary request handler to your configuration
+* Add the searchClass field as string to your configuration
+* Id is the 
+
+h2. Weaknesses and problems
+
+* Weak index by choosing "models.Entity.$ID"
+* Just POC, no real app tests yet
+* Works only with JPA
